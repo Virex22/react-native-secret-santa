@@ -9,9 +9,11 @@ import Return from '../components/Button/Return'
 import ImageButton from '../components/Button/ImageButton'
 import Modal from '../components/modal/Modal'
 import NumberInput from '../components/Forms/Input/NumberInput'
-import { UpdatePsoeudo } from '../lib/authenticationHelper'
-
+import UserContext from '../context/UserContext'
+import { GetProfile } from '../lib/profileHelper'
 const HomeScreen = ({navigation}) => {
+  const userContext = React.useContext(UserContext);
+
   const  [showJoinGroupModal, setShowJoinGroupModal] = React.useState(false);
   const [modalForms, setModalForms] = React.useState({
     groupCode: '',
@@ -24,10 +26,27 @@ const HomeScreen = ({navigation}) => {
     }
   }
 
+  useEffect(() => {
+    GetProfile(userContext.profile.id, userContext.setProfile).then((response) => {
+      if (response.error) {
+        console.error(response.error)
+      } else {
+        userContext.setProfile({
+            ... userContext.profile, 
+            id: response.data.id,
+            pseudo: response.data.full_name,
+          })
+      }
+    }
+    ).catch((error) => {
+      console.error(error)
+    })
+  }, [])
+
   return (
     <Background decorateTop disableBottom>
       <SantaTimer />
-      <GroupList />
+      <GroupList navigation={navigation}/>
       
       <View style={styles.buttonsContainer}>
           <Button secondary text="Rejoindre un groupe" onClick={()=>{setShowJoinGroupModal(true)}} />

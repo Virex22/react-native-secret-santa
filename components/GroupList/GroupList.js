@@ -4,16 +4,17 @@ import { ScrollView } from 'react-native-gesture-handler'
 import UserContext from '../../context/UserContext'
 import { GetGroups } from '../../lib/groupHelper'
 import Group from './Group'
+import PropTypes from 'prop-types'
 
-const GroupList = () => {
+const GroupList = (props) => {
 
     let userContext = React.useContext(UserContext)
 
     const [groups, setGroups] = React.useState([])
 
     function updateGroups() {
-        GetGroups(userContext.id).then((groups) => {
-            // setGroups(groups)
+        GetGroups(userContext.profile.id).then((groups) => {
+            setGroups(groups)
         })
         .catch((error) => {
             console.log(error)
@@ -38,10 +39,14 @@ const GroupList = () => {
             <Text  style={styles.titleText}>Mes groupes</Text>
         </View>
         {groups.map((group) => (
-            <Group key={group.id} title={group.name} members={group.members} />
+            <Group key={group.id} title={group.name} members={group.members} onClick={()=>{ props.navigation.navigate('Group', {groupId: group.id}) }} />
         ))}
     </ScrollView>
   )
+}
+
+GroupList.propTypes = {
+    navigation: PropTypes.object.isRequired,
 }
 
 const styles = StyleSheet.create( {

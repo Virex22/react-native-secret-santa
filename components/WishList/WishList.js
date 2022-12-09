@@ -4,8 +4,30 @@ import Colors from '../../config/colors'
 import propsTypes from 'prop-types'
 import Button from '../Button/Button'
 import { ScrollView } from 'react-native-gesture-handler'
+import UserContext from '../../context/UserContext'
+import { GetProfile, UpdateProfile } from '../../lib/profileHelper' 
 
 const WishList = (props) => {
+
+    const userContext = React.useContext(UserContext);
+
+    const [profile, setProfile] = React.useState({});
+    const [wishListText, setWishListText] = React.useState(); 
+
+    function save() {
+        UpdateProfile(userContext.profile.id, undefined, wishListText).then((profile) => {
+            setProfile(profile);
+        }).catch((error) => {
+            console.log(error);
+        })
+    }
+
+    GetProfile(userContext.profile.id).then((profile) => {
+        setProfile(profile);
+    }).catch((error) => {
+        console.log(error);
+    })
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
         <Text style={styles.title}>Ma liste au père noël</Text>
@@ -14,10 +36,11 @@ const WishList = (props) => {
         placeholder="Ajouter un cadeau" 
         multiline={true}
         numberOfLines={5}
+        onChangeText={setWishListText}
         editable={props.editable}
-        defaultValue={props.initText}
+        defaultValue={profile ? profile.wish_list : ''}
         />
-        { props.editable ? <Button style={styles.button} text='Enregistrer'/> : null}
+        { props.editable ? <Button style={styles.button} text='Enregistrer' onClick={()=>{ save() }}/> : null}
         <Button style={styles.button} text='Retour' secondary={props.editable} onClick={props.navigation.goBack}/>
     </ScrollView>
   )
@@ -25,13 +48,11 @@ const WishList = (props) => {
 
 WishList.propTypes = {
     editable: propsTypes.bool,
-    initText: propsTypes.string,
     navigation: propsTypes.object.isRequired,
 }
 
 WishList.defaultProps = {
     editable: false,
-    initText: '',
     navigation: {},
 }
 

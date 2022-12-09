@@ -2,16 +2,13 @@ import React from 'react'
 
 const UserContext = React.createContext();
 
-export default UserContext
-// provider 
+export default UserContext;
 
 const UserProvider = ({ children }) => {
-    const [psoeudo, setPsoeudo] = React.useState(null)
-    const [email, setEmail] = React.useState(null)
-    const [id, setId] = React.useState(null)
+    const [profile, setProfile] = React.useState({})
      
     return (
-        <UserContext.Provider value={{ psoeudo, setPsoeudo, email, setEmail , id, setId}}>
+        <UserContext.Provider value={{ profile, setProfile }}>
             {children}
         </UserContext.Provider>
     )

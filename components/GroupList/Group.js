@@ -1,27 +1,42 @@
 import React from 'react'
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Colors from '../../config/colors';
+import propsType from 'prop-types';
 
 const Group = (props) => {
 
     let stringMembers = "";
-    props.members.forEach((member) => {
+    let members = JSON.parse(props.members);
+    members.forEach((member) => {
         stringMembers += member.name + ", ";
     });
     stringMembers = stringMembers.slice(0, -2);
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container} activeOpacity={0.7} onPress={props.onClick}>
         <Image  
-        resizeMethod='resize'
-        resizeMode='contain'
-        style={styles.image} 
-        source={require("../../assets/img/family.png")} />
+            resizeMethod='resize'
+            resizeMode='contain'
+            style={styles.image} 
+            source={require("../../assets/img/family.png")} 
+        />
         <View style={styles.textContainer}>
             <Text style={styles.title} >{props.title}</Text>
             <Text style={styles.users} >{stringMembers}</Text>
         </View>
-    </View>
+    </TouchableOpacity>
   )
+}
+
+Group.propTypes = {
+    title: propsType.string.isRequired,
+    members: propsType.string.isRequired,
+    onClick: propsType.func,
+}
+
+Group.defaultProps = {
+    title: "Titre",
+    members: "[]",
+    onClick: undefined,
 }
 
 const styles = StyleSheet.create({

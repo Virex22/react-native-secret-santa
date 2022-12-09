@@ -3,14 +3,19 @@ import { Image, StyleSheet, Text, View } from 'react-native'
 import Return from '../components/Button/Return'
 import Background from '../components/Template/Background'
 import WishList from '../components/WishList/WishList'
+import UserContext from '../context/UserContext'
 
 const ProfileScreen = ({navigation}) => {
+    const userContext = React.useContext(UserContext);
+
+    console.log(userContext.profile);
+
   return (
     <Background disableTop>
         <Image source={require('../assets/img/profileIcon.png')} style={styles.image} />
-        <Text style={styles.name}>Valentin HOFFART</Text>
-        <Text style={styles.lastConnexion}>Valentin HOFFART s’est connecté le 06/12/2022 à Metz</Text>
-        <WishList initText={"Un super cadeau \nUn autre super cadeau"} navigation={navigation}/>
+        <Text style={styles.name}>{userContext.profile.pseudo}</Text>
+        <Text style={styles.lastConnexion}>{userContext.profile.pseudo} s’est connecté le 06/12/2022 à Metz</Text>
+        <WishList navigation={navigation} editable/>
     </Background>
   )
 }

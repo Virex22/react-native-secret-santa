@@ -10,13 +10,13 @@ import Background from '../components/Template/Background'
 import TouchableText from '../components/TouchableText/TouchableText'
 import Colors from '../config/colors'
 import { supabase } from '../lib/supabase'
-import { RegisterUser, UpdatePsoeudo } from '../lib/authenticationHelper'
+import { RegisterUser } from '../lib/authenticationHelper'
 
 const RegisterScreen = ({navigation}) => {
 
   const [forms, setForms] = React.useState({
-    psoeudo: '',
-    psoeudoValid: false,
+    pseudo: '',
+    pseudoValid: false,
     email: '',
     emailValid: false,
     password: '',
@@ -26,8 +26,7 @@ const RegisterScreen = ({navigation}) => {
 
   async function onRegister() {
     
-    console.log(forms)
-    if (forms.psoeudoValid && forms.emailValid && forms.passwordValid && forms.confirmValid) {
+    if (forms.pseudoValid && forms.emailValid && forms.passwordValid && forms.confirmValid) {
       RegisterUser(forms.email, forms.password)
         .then((response) => {
           Alert.alert('Inscription réussie', 'Vous pouvez maintenant vous connecter après avoir vérifié votre email', [
@@ -50,7 +49,7 @@ const RegisterScreen = ({navigation}) => {
             <TextInput 
               title="Pseudo :"
               placeholder="Pseudo"
-              onChange={(text,isValid) => setForms({ ...forms, psoeudo: text, psoeudoValid: isValid })}
+              onChange={(text,isValid) => setForms({ ...forms, pseudo: text, pseudoValid: isValid })}
               regex={/^[a-zA-Z0-9]{3,20}$/} />
             <EmailInput 
               title="Email :" 

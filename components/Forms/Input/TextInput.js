@@ -9,7 +9,6 @@ const TextInput = (props) => {
 
     function onChange(text) {
         setValid(props.regex.test(text));
-        console.log(props.regex.test(text), text);
 
         if (props.onChange)
             props.onChange(text,props.regex.test(text));

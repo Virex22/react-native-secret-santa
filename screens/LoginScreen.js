@@ -14,7 +14,7 @@ import UserContext from '../context/UserContext'
 
 const LoginScreen = ({navigation}) => {
 
-  let userContext = React.useContext(UserContext)
+  const userContext = React.useContext(UserContext)
 
   const [forms, setForms] = React.useState({
     email: '',
@@ -26,8 +26,8 @@ const LoginScreen = ({navigation}) => {
   async function onLogin() {
     if (forms.emailValid && forms.passwordValid) {
       LoginUser(forms.email, forms.password).then((response) => {
-        userContext.setId(response.data.session.user.id)
-        userContext.setEmail(response.data.session.user.email)
+        userContext.setProfile({... userContext.profile, id : response.data.session.user.id });
+        userContext.setProfile({... userContext.profile, email : response.data.session.user.email});
         if (response.error) {
           Alert.alert('Erreur', 'Une erreur est survenue lors de la connexion : ' + response.error)
         } else {
