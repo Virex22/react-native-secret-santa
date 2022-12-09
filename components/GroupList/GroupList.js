@@ -2,7 +2,7 @@ import React from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import UserContext from '../../context/UserContext'
-import { GetGroups } from '../../lib/groupHelper'
+import { GetGroups } from '../../helper/groupHelper'
 import Group from './Group'
 import PropTypes from 'prop-types'
 

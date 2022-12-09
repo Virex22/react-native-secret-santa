@@ -7,8 +7,7 @@ import PasswordInput from '../components/Forms/Input/PasswordInput'
 import Background from '../components/Template/Background'
 import TouchableText from '../components/TouchableText/TouchableText'
 import Colors from '../config/colors'
-import { supabase } from '../lib/supabase'
-import { LoginUser } from '../lib/authenticationHelper'
+import { LoginUser } from '../helper/authenticationHelper'
 import UserContext from '../context/UserContext'
 
 
@@ -26,8 +25,7 @@ const LoginScreen = ({navigation}) => {
   async function onLogin() {
     if (forms.emailValid && forms.passwordValid) {
       LoginUser(forms.email, forms.password).then((response) => {
-        userContext.setProfile({... userContext.profile, id : response.data.session.user.id });
-        userContext.setProfile({... userContext.profile, email : response.data.session.user.email});
+        userContext.setProfile({... userContext.profile, id : response.data.session.user.id , email : response.data.session.user.email});
         if (response.error) {
           Alert.alert('Erreur', 'Une erreur est survenue lors de la connexion : ' + response.error)
         } else {

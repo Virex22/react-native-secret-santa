@@ -5,7 +5,7 @@ import propsTypes from 'prop-types'
 import Button from '../Button/Button'
 import { ScrollView } from 'react-native-gesture-handler'
 import UserContext from '../../context/UserContext'
-import { GetProfile, UpdateProfile } from '../../lib/profileHelper' 
+import { GetProfile, UpdateProfile } from '../../helper/profileHelper'
 
 const WishList = (props) => {
 

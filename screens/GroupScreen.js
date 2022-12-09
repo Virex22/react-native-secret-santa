@@ -5,7 +5,7 @@ import GroupButton from '../components/Button/GroupButton'
 import Return from '../components/Button/Return'
 import Background from '../components/Template/Background'
 import Colors from '../config/colors'
-import { GetGroup } from '../lib/groupHelper'
+import { GetGroup } from '../helper/groupHelper'
 
 const GroupScreen = ({navigation,route}) => {
   const [step , setStep] = React.useState(0);

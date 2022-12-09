@@ -1,4 +1,4 @@
-import { supabase } from "./supabase";
+import { supabase } from "../lib/supabase"
 
 export function UpdateProfile(id, pseudo, wishList) {
     return new Promise(async(resolve, reject) => {

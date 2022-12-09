@@ -10,7 +10,7 @@ import ImageButton from '../components/Button/ImageButton'
 import Modal from '../components/modal/Modal'
 import NumberInput from '../components/Forms/Input/NumberInput'
 import UserContext from '../context/UserContext'
-import { GetProfile } from '../lib/profileHelper'
+import { GetProfile } from '../helper/profileHelper'
 const HomeScreen = ({navigation}) => {
   const userContext = React.useContext(UserContext);
 
@@ -27,14 +27,14 @@ const HomeScreen = ({navigation}) => {
   }
 
   useEffect(() => {
-    GetProfile(userContext.profile.id, userContext.setProfile).then((response) => {
+    GetProfile(userContext.profile.id).then((response) => {
       if (response.error) {
         console.error(response.error)
       } else {
         userContext.setProfile({
             ... userContext.profile, 
-            id: response.data.id,
-            pseudo: response.data.full_name,
+            id: response.id,
+            pseudo: response.full_name,
           })
       }
     }

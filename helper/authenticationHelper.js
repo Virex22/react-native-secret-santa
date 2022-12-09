@@ -1,4 +1,4 @@
-import { supabase } from "./supabase";
+import { supabase } from "../lib/supabase"
 
 export function RegisterUser(email, password) {
     return new Promise(async(resolve, reject) => {

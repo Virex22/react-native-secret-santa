@@ -1,4 +1,4 @@
-import { supabase } from "./supabase";
+import { supabase } from "../lib/supabase"
 
 export function PostGroup(name, members, maxAmount, tirageCount, creator ) {
     return new Promise(async(resolve, reject) => {

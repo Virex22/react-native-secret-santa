@@ -9,8 +9,7 @@ import TextInput from '../components/Forms/Input/TextInput'
 import Background from '../components/Template/Background'
 import TouchableText from '../components/TouchableText/TouchableText'
 import Colors from '../config/colors'
-import { supabase } from '../lib/supabase'
-import { RegisterUser } from '../lib/authenticationHelper'
+import { RegisterUser } from '../helper/authenticationHelper'
 
 const RegisterScreen = ({navigation}) => {
 
