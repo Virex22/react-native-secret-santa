@@ -35,13 +35,8 @@ export function LoadableStatus<T>(props: Props<T>) {
     setState(LOADABLE_STATUS.LOADING);
     props.promise
       .then(response => {
-        if (!response) {
-          setState(LOADABLE_STATUS.ERROR);
-        }
-        response.json().then(results => {
           setState(LOADABLE_STATUS.SUCCEEDED);
           setRes(results);
-        });
       })
       .catch(e => {
         setState(LOADABLE_STATUS.ERROR);

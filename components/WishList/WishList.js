@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { StyleSheet, Text, TextInput,View } from 'react-native'
 import Colors from '../../config/colors'
 import propsTypes from 'prop-types'
@@ -21,12 +21,13 @@ const WishList = (props) => {
             console.log(error);
         })
     }
-
-    GetProfile(userContext.profile.id).then((profile) => {
-        setProfile(profile);
-    }).catch((error) => {
-        console.log(error);
-    })
+    useEffect(() => {
+        GetProfile(userContext.profile.id).then((profile) => {
+            setProfile(profile);
+        }).catch((error) => {
+            console.log(error);
+        })
+    }, [])
 
   return (
     <ScrollView contentContainerStyle={styles.container}>

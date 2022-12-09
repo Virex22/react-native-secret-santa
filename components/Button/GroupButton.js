@@ -5,7 +5,7 @@ import propTypes from 'prop-types'
 
 const GroupButton = (props) => {
   return (
-    <TouchableOpacity style={styles.container} activeOpacity={props.disable ? 1 : 0.8} onPress={!props.disable && props.onClick} >
+    <TouchableOpacity style={styles.container} activeOpacity={props.disable ? 1 : 0.8} onPress={props.disable? undefined : props.onClick} >
         <Image style={styles.image} source={props.source} resizeMethod="resize" resizeMode="contain" />
         <Text style={styles.text} >{props.text}</Text>
     </TouchableOpacity>
@@ -26,8 +26,6 @@ GroupButton.defaultProps = {
     disable: false,
 }
 
-
-
 const styles = StyleSheet.create({
     container: {
         display: 'flex',
@@ -36,9 +34,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         width: 300,
         height: 50,
-        backgroundColor: Colors.beige,
+        backgroundColor: Colors.lightBlue,
         alignSelf: 'center',
-        marginTop: 20,
         borderWidth: 0,
         borderRadius: 10,
     },
