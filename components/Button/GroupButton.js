@@ -5,7 +5,7 @@ import propTypes from 'prop-types'
 
 const GroupButton = (props) => {
   return (
-    <TouchableOpacity style={styles.container} activeOpacity={0.8} onPress={props.onClick} >
+    <TouchableOpacity style={styles.container} activeOpacity={props.disable ? 1 : 0.8} onPress={!props.disable && props.onClick} >
         <Image style={styles.image} source={props.source} resizeMethod="resize" resizeMode="contain" />
         <Text style={styles.text} >{props.text}</Text>
     </TouchableOpacity>
@@ -16,12 +16,14 @@ GroupButton.propTypes = {
     source: propTypes.number,
     text: propTypes.string,
     onClick: propTypes.func,
+    disable: propTypes.bool,
 }
 
 GroupButton.defaultProps = {
     source: require("../../assets/img/sortIcon.png"),
     text: "Clique moi !",
     onClick: undefined,
+    disable: false,
 }
 
 

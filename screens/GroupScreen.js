@@ -1,30 +1,59 @@
 import React, { useEffect } from 'react'
-import { Image, StyleSheet, Text, View} from 'react-native'
+import { Alert, Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native'
 import Button from '../components/Button/Button'
 import GroupButton from '../components/Button/GroupButton'
 import Return from '../components/Button/Return'
 import Background from '../components/Template/Background'
 import Colors from '../config/colors'
-import { GetGroup } from '../helper/groupHelper'
+import UserContext from '../context/UserContext'
+import { GetGroup, removeGroup } from '../helper/groupHelper'
 
 const GroupScreen = ({navigation,route}) => {
+  const userContext = React.useContext(UserContext);
   const [step , setStep] = React.useState(0);
   const [group, setGroup] = React.useState(null);
   let {groupId} = route.params;
 
+  let code = group ? group.id : '';
+  code = code.toString().padStart(6, '0');
+
   useEffect(() => {
     GetGroup(groupId).then((group) => {
-      setGroup(group)
+      setGroup(group);
     })
   }, [])
+
+  function handleDeleteGroup() {
+    Alert.alert(
+      "Supprimer le groupe",
+      "Êtes-vous sûr de vouloir supprimer ce groupe ?",
+      [
+        {
+          text: "Annuler"
+        },
+        { 
+          text: "Supprimer", 
+          onPress: () => {
+            removeGroup(groupId).then(() => {
+              navigation.navigate('Home');
+            }
+          )
+          },
+        }
+      ],
+      { cancelable: false }
+    );
+  }
+
+
+
+  const IsOwner = group ? group.creator == userContext.profile.id : false;
   let stringMembers = '';
   if (group) {
     console.log(group)
     let members = JSON.parse(group.members);
     stringMembers = group ? members.map((member) => member.name).join(', ') : '';
   }
-  
-  
 
   return (
     <Background disableTop>
@@ -40,10 +69,13 @@ const GroupScreen = ({navigation,route}) => {
         </View>
         <View style={styles.groupAction}>
             {step == 1 && <Text style={styles.groupActionTitle}>Votre secret santa</Text>}
-            <GroupButton />
+            <TouchableOpacity onPress={() => {}}>
+            </TouchableOpacity>
+            <GroupButton disable={!IsOwner} text={IsOwner ? "Générer le tirage au sort" : "Attendre le tirage au sort"} onClick={() => {}} />
         </View>
         <Return onClick={() => {navigation.navigate('Home')}} />
-        <Text style={styles.groupCodeText}>Code : {groupId}</Text>
+        <Text style={styles.groupCodeText}>Code d'invitation : {code}</Text>
+        {IsOwner && <Button style={styles.deleteButton} text="Supprimer le groupe" onClick={handleDeleteGroup} /> }
     </Background>
   )
 }
@@ -67,7 +99,7 @@ const styles = StyleSheet.create({
     },
     groupCodeText: {
       position: 'absolute',
-      bottom: 15,
+      bottom: 60,
       left: 0,
       right: 0,
       textAlign: 'center'
@@ -99,6 +131,15 @@ const styles = StyleSheet.create({
     priceText: {
       color: Colors.secondaryText,
       fontWeight: 'bold',
+    },
+    deleteButton: {
+      position: 'absolute',
+      bottom: 0,
+      width: '100%',
+      backgroundColor: "#990000",
+      alignSelf: 'center',
+      borderRadius: 0,
+      height: 50,
     },
   })
 

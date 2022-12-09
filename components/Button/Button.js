@@ -45,7 +45,7 @@ const Styles = StyleSheet.create({
 })
 const StylesSecondary = StyleSheet.create({
     container: {
-        padding: 10,
+        padding: 7,
         borderRadius: 7,
         borderColor: Colors.primary,
         borderWidth: 3,

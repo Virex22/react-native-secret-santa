@@ -11,6 +11,7 @@ import Modal from '../components/modal/Modal'
 import NumberInput from '../components/Forms/Input/NumberInput'
 import UserContext from '../context/UserContext'
 import { GetProfile } from '../helper/profileHelper'
+import { addGroupMembers } from '../helper/groupHelper'
 const HomeScreen = ({navigation}) => {
   const userContext = React.useContext(UserContext);
 
@@ -22,7 +23,13 @@ const HomeScreen = ({navigation}) => {
 
   function joinGroup() {
     if (modalForms.groupCodeValid) {
-      navigation.navigate('Group', {code: modalForms.groupCode})
+      let numberCode = parseInt(modalForms.groupCode);
+      addGroupMembers(numberCode,userContext.profile.id, userContext.profile.pseudo).then((response) => {
+        setShowJoinGroupModal(false);
+        navigation.navigate('Group', {groupId: numberCode})
+      }).catch((error) => {
+        console.error(error)
+      })
     }
   }
 
@@ -64,7 +71,7 @@ const HomeScreen = ({navigation}) => {
         visible={showJoinGroupModal}
         onClose={() => {setShowJoinGroupModal(false)}}
       >
-        <NumberInput placeholder="123456" title="Code du groupe" max={999999} min={100000} 
+        <NumberInput placeholder="123456" title="Code du groupe" max={999999}
           onChange={(text,isValid) => {setModalForms({ ...modalForms, groupCode: text, groupCodeValid: isValid })}}
         />
         <Button text='Rejoindre' style={styles.modalButton} onClick={joinGroup}/>

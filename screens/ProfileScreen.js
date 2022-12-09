@@ -7,14 +7,11 @@ import UserContext from '../context/UserContext'
 
 const ProfileScreen = ({navigation}) => {
     const userContext = React.useContext(UserContext);
-
-    console.log(userContext.profile);
-
   return (
     <Background disableTop>
         <Image source={require('../assets/img/profileIcon.png')} style={styles.image} />
         <Text style={styles.name}>{userContext.profile.pseudo}</Text>
-        <Text style={styles.lastConnexion}>{userContext.profile.pseudo} s’est connecté le 06/12/2022 à Metz</Text>
+        <Text style={styles.lastConnexion}>{userContext.profile.pseudo} s’est connecté il y a 2 jours à Metz</Text>
         <WishList navigation={navigation} editable/>
     </Background>
   )
