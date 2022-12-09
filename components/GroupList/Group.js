@@ -5,6 +5,8 @@ import propsType from 'prop-types';
 
 const Group = (props) => {
 
+    const  [showWaitDrawingIcon, setShowWaitDrawingIcon] = React.useState(false);
+
     let stringMembers = "";
     let members = JSON.parse(props.members);
     members.forEach((member) => {
@@ -13,16 +15,22 @@ const Group = (props) => {
     stringMembers = stringMembers.slice(0, -2);
   return (
     <TouchableOpacity style={styles.container} activeOpacity={0.7} onPress={props.onClick}>
-        <Image  
+        <Image 
             resizeMethod='resize'
             resizeMode='contain'
-            style={styles.image} 
+            style={styles.imageLeft} 
             source={require("../../assets/img/family.png")} 
         />
         <View style={styles.textContainer}>
             <Text style={styles.title} >{props.title}</Text>
             <Text style={styles.users} >{stringMembers}</Text>
         </View>
+        {props.isDrawing? null : <Image
+            resizeMethod='resize'
+            resizeMode='center'
+            style={styles.imageRight} 
+            source={require("../../assets/img/chrono.png")} 
+        />}
     </TouchableOpacity>
   )
 }
@@ -49,6 +57,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
+        alignItems: 'center'
     },
     title: {
         fontSize: 20,
@@ -58,9 +67,13 @@ const styles = StyleSheet.create({
         fontSize: 15,
         color: "#aaa",
     },
-    image: {
+    imageLeft: {
         width: 50,
         height: 50,
+    },
+    imageRight: {
+        width: 25,
+        height: 25,
     },
     textContainer: {
         display: 'flex',

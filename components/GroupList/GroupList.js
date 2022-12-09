@@ -39,7 +39,12 @@ const GroupList = (props) => {
             <Text  style={styles.titleText}>Mes groupes</Text>
         </View>
         {groups.map((group) => (
-            <Group key={group.id} title={group.name} members={group.members} onClick={()=>{ props.navigation.navigate('Group', {groupId: group.id}) }} />
+            <Group key={group.id} 
+            title={group.name} 
+            members={group.members} 
+            onClick={()=>{ props.navigation.navigate('Group', {groupId: group.id}) }} 
+            isDrawing={false}
+            />
         ))}
     </ScrollView>
   )
